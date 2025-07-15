@@ -8,6 +8,9 @@ class TaskController extends BaseController
 {
     public function index()
     {
+        if (!session()->get('isLoggedIn')) {
+            return redirect()->to('/login');
+        }
         $model = new TaskModel();
         $data['tasks'] = $model->findAll();
 
@@ -16,11 +19,17 @@ class TaskController extends BaseController
 
     public function create()
     {
+        if (!session()->get('isLoggedIn')) {
+            return redirect()->to('/login');
+        }
         return view('tasks/create');
     }
 
     public function store()
     {
+        if (!session()->get('isLoggedIn')) {
+            return redirect()->to('/login');
+        }
         $model = new TaskModel();
 
         $model->save([
@@ -32,6 +41,9 @@ class TaskController extends BaseController
 
     public function edit($id)
     {
+        if (!session()->get('isLoggedIn')) {
+            return redirect()->to('/login');
+        }
         $model = new TaskModel();
         $data['task'] = $model->find($id);
 
@@ -40,6 +52,9 @@ class TaskController extends BaseController
 
     public function update($id)
     {
+        if (!session()->get('isLoggedIn')) {
+            return redirect()->to('/login');
+        }
         $model = new TaskModel();
 
         $model->update($id, [
@@ -51,6 +66,9 @@ class TaskController extends BaseController
 
     public function delete($id)
     {
+        if (!session()->get('isLoggedIn')) {
+            return redirect()->to('/login');
+        }
         $model = new TaskModel();
         $model->delete($id);
 
