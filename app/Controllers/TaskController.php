@@ -7,15 +7,16 @@ use App\Models\TaskModel;
 class TaskController extends BaseController
 {
     public function index()
-    {
-        if (!session()->get('isLoggedIn')) {
-            return redirect()->to('/login');
-        }
-        $model = new TaskModel();
-        $data['tasks'] = $model->findAll();
+	{
+	    $taskModel = new \App\Models\TaskModel();
 
-        return view('tasks/index', $data);
-    }
+	    $data = [
+	        'tasks' => $taskModel->paginate(10), // Show 10 per page
+	        'pager' => $taskModel->pager
+	    ];
+
+	    return view('tasks/index', $data);
+	}
 
     public function create()
     {

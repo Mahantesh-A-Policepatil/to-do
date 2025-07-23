@@ -96,6 +96,43 @@
                         </tbody>
                     </table>
                 </div>
+
+                <?php
+                    $totalPages = $pager->getPageCount(); // Total number of pages
+                    $currentPage = $pager->getCurrentPage(); // Current page number
+                    $baseURL = $pager->getPageURI(1); // Base URL for pagination links
+
+                    // Extract query parameters from URL (if any)
+                    $queryParams = $_GET;
+                    unset($queryParams['page']); // Remove 'page' so we can add it manually
+                    $queryString = http_build_query($queryParams);
+                    $queryString = $queryString ? "&{$queryString}" : '';
+                ?>
+                <!-- Pagination -->
+                <div class="d-flex justify-content-center mt-4">
+                    <nav>
+                        <ul class="pagination">
+                            <!-- Previous -->
+                            <li class="page-item <?= $currentPage == 1 ? 'disabled' : '' ?>">
+                                <a class="page-link" href="<?= $pager->getPageURI($currentPage - 1) . $queryString ?>">Previous</a>
+                            </li>
+
+                            <!-- Page Numbers -->
+                            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                                <li class="page-item <?= $i == $currentPage ? 'active' : '' ?>">
+                                    <a class="page-link" href="<?= $pager->getPageURI($i) . $queryString ?>">
+                                        <?= $i ?>
+                                    </a>
+                                </li>
+                            <?php endfor; ?>
+
+                            <!-- Next -->
+                            <li class="page-item <?= $currentPage == $totalPages ? 'disabled' : '' ?>">
+                                <a class="page-link" href="<?= $pager->getPageURI($currentPage + 1) . $queryString ?>">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             <?php endif; ?>
         </main>
     </div>
