@@ -36,7 +36,7 @@ class TaskController extends BaseController
             'title' => $this->request->getPost('title')
         ]);
 
-        return redirect()->to('/tasks');
+        return redirect()->to('/tasks')->with('success', 'Task created successfully!');
     }
 
     public function edit($id)
@@ -61,7 +61,7 @@ class TaskController extends BaseController
             'title' => $this->request->getPost('title')
         ]);
 
-        return redirect()->to('/tasks');
+        return redirect()->to('/tasks')->with('success', 'Task updated successfully!');
     }
 
     public function delete($id)
@@ -72,7 +72,7 @@ class TaskController extends BaseController
         $model = new TaskModel();
         $model->delete($id);
 
-        return redirect()->to('/tasks');
+        return redirect()->to('/tasks')->with('success', 'Task deleted successfully!');
     }
 }
 
